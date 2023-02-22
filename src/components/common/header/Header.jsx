@@ -1,5 +1,6 @@
 import {FiMeh} from 'react-icons/fi'
 import { Link } from 'react-router-dom'
+import {UserControls} from '.';
 
 export const Header = () => {
   return (
@@ -10,7 +11,9 @@ export const Header = () => {
           Game Shell
         </Link>
       </h1>
-      <div>Controls</div>
+      <div>
+        <UserControls></UserControls>
+      </div>
     </div>
   )
 }
