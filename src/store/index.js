@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, compose } from 'redux';
 import { authReducer, counterReducer } from './reducers';
 
 const mainReducer = combineReducers({
@@ -6,6 +6,8 @@ const mainReducer = combineReducers({
   auth: authReducer,
 });
 
-const store = createStore(mainReducer);
+// recipe
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(mainReducer, composeEnhancers());
 
 export default store;

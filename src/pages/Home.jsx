@@ -1,49 +1,25 @@
-import { useEffect, useState } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { Layout } from "../layouts";
-import {client as usersApi} from './../api/users'
+import { Link } from 'react-router-dom';
+import { Button } from '../components/common/ui';
+import { StatsList } from '../components/stats';
+import { AuthorizedLayout, Layout } from '../layouts';
 
 export const Home = () => {
-  const [users, setUsers] = useState([]);
-  const dispatch = useDispatch();
-  const number = useSelector((state) => {
-    return state.counter;
-  });
-
-  useEffect(() => {
-    usersApi.get('/users').then((response) => {
-      const { data } = response;
-
-      setUsers(data);
-    });
-  }, [setUsers]);
-
   return (
     <Layout>
-      <div className="mx-auto px-4 container">
-        Home: {JSON.stringify(users)}
-        <p className="mt-6">{number}</p>
-        <div>
-          <button
-            onClick={() => {
-              dispatch({
-                type: 'increment',
-              });
-            }}
-          >
-            Increment +
-          </button>
+      <div className="mx-auto p-4 container">
+        <h1>Welcome to Game Shell</h1>
 
-          <button
-            onClick={() => {
-              dispatch({
-                type: 'decrement',
-              });
-            }}
-          >
-            Decrement -{' '}
-          </button>
-        </div>
+        <AuthorizedLayout>
+          <div className="py-4">
+            <StatsList></StatsList>
+
+            <div className="text-center mt-4">
+              <Link to="/play" title="Play">
+                <Button element="span">Play now!</Button>
+              </Link>
+            </div>
+          </div>
+        </AuthorizedLayout>
       </div>
     </Layout>
   );
