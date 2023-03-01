@@ -1,8 +1,13 @@
-// 921124539988-isc9lkfns3edqq893e9a2avubnpa08vf.apps.googleusercontent.com
-
+import jwtDecode from 'jwt-decode';
+import {
+  createUser,
+  readUser,
+  setUser,
+  setUserStats,
+} from '../store/action/auth';
+import store from './../store';
 let initialized = false;
-const clientId =
-  '921124539988-isc9lkfns3edqq893e9a2avubnpa08vf.apps.googleusercontent.com';
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 export const initializeGoogleAuth = async () => {
   return new Promise((resolve) => {
@@ -15,7 +20,38 @@ export const initializeGoogleAuth = async () => {
       google.accounts.id.initialize({
         client_id: clientId,
         callback: (response) => {
-          console.log(response);
+          const {
+            given_name: firstName,
+            family_name: lastName,
+            email,
+            picture: avatar,
+            sub: id,
+            name,
+          } = jwtDecode(response.credential);
+
+          store.dispatch(
+            setUser({
+              firstName,
+              lastName,
+              email,
+              avatar,
+              id,
+              name,
+            }),
+          );
+
+          store
+            .dispatch(readUser(id))
+            .then(({ stats }) => {
+              // daca user exista - incarcam informatia in stare
+              store.dispatch(setUserStats(stats));
+            })
+            .catch(() => {
+              // daca user nu exista - creeam
+              store.dispatch(createUser(id));
+            });
+
+          console.log(jwtDecode(response.credential));
         },
         scope: 'email profile',
       });
