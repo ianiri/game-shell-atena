@@ -10,12 +10,12 @@ export const Profile = () => {
             <h1 className="text-3xl font-bold">Profile</h1>
           </header>
 
-          <section className="grid grid-cols-12 mb-4">
+          <section className="grid grid-cols-12 my-4">
             <div className="col-span-8">
               <UserProfile></UserProfile>
             </div>
 
-            <div className="col-span-4">
+            <div className="col-span-4 flex justify-center items-end">
               <Creature></Creature>
             </div>
           </section>
