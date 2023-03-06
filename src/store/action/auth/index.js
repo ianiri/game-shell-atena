@@ -29,7 +29,8 @@ export const readUser = (userId) => {
 // POST -> /users
 export const createUser = (userId) => {
   return async (_, getState) => {
-    const { stats } = getState();
+    const { auth } = getState();
+    const { stats } = auth;
 
     const { data } = await client.post('/users', {
       id: userId,

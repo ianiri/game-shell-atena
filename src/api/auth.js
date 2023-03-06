@@ -6,6 +6,12 @@ import {
   setUserStats,
 } from '../store/action/auth';
 import store from './../store';
+import {
+  createProfile,
+  readProfile,
+  setUserProfile,
+} from './../store/action/profile/profileActions';
+
 let initialized = false;
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -52,6 +58,19 @@ export const initializeGoogleAuth = async () => {
             });
 
           console.log(jwtDecode(response.credential));
+
+          store
+            .dispatch(readProfile(id))
+            .then(({ colors }) => {
+              store.dispatch(
+                setUserProfile({
+                  colors,
+                }),
+              );
+            })
+            .catch(() => {
+              store.dispatch(createProfile(id));
+            });
         },
         scope: 'email profile',
       });
