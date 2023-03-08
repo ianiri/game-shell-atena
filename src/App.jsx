@@ -5,31 +5,28 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home></Home>,
-    errorElement: <FourOhFour></FourOhFour>
+    errorElement: <FourOhFour></FourOhFour>,
   },
   {
     path: '/profile',
-    element: <Profile></Profile>
+    element: <Profile></Profile>,
   },
   {
     path: '/play',
-    element: <Play></Play>
+    element: <Play></Play>,
+  },
+  {
+    path: '/ranks/:userId',
+    element: <Rank></Rank>,
   },
   {
     path: '/ranks',
-    element: <Ranks></Ranks>
+    element: <Ranks></Ranks>,
   },
-  {
-    path: '/rank',
-    element: <Rank></Rank>
-  }
-])
+]);
 
 const App = () => {
-
-  return (
-    <RouterProvider router={router}></RouterProvider>
-  );
-}
+  return <RouterProvider router={router}></RouterProvider>;
+};
 
 export default App;
